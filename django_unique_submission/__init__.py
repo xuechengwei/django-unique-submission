@@ -1,3 +1,8 @@
+"""
+All rights reservered Lvye.cn
+Meng Zhuo <mengzhuo@lvye.cn>
+"""
+
 import os
 import datetime
 
