@@ -30,7 +30,7 @@ def unique(issue_method="GET", validate_method='POST'):
                 now = datetime.datetime.now()
                 request.session[_UNIQUE_TOKEN_ID] = dict(((tok, exp_time)
                                                           for tok, exp_time in request.session[_UNIQUE_TOKEN_ID].iteritems()
-                                                          if exp_time > now))
+                                                          if datetime.datetime.strptime("%Y-%m-%dT%H:%M:%S", exp_time) > now))
 
                 # start checking
                 token = request.POST.get(
@@ -50,8 +50,9 @@ def unique(issue_method="GET", validate_method='POST'):
 
                 available_tokens = request.session[_UNIQUE_TOKEN_ID]
                 utok = os.urandom(24).encode('hex').strip()
+                d = datetime.datetime.now() + datetime.timedelta(seconds=_UNIQUE_TIMEOUT)
                 available_tokens[
-                    utok] = datetime.datetime.now() + datetime.timedelta(seconds=_UNIQUE_TIMEOUT)
+                    utok] = d.strftime("%Y-%m-%dT%H:%M:%S")
                 request.session.unique_token = utok
                 request.session.save()
 
