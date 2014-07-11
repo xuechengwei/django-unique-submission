@@ -30,7 +30,7 @@ def unique(issue_method="GET", validate_method='POST'):
                 now = datetime.datetime.now()
                 request.session[_UNIQUE_TOKEN_ID] = dict(((tok, exp_time)
                                                           for tok, exp_time in request.session[_UNIQUE_TOKEN_ID].iteritems()
-                                                          if datetime.datetime.strptime("%Y-%m-%dT%H:%M:%S", exp_time) > now))
+                                                          if datetime.datetime.strptime(exp_time, "%Y-%m-%dT%H:%M:%S") > now))
 
                 # start checking
                 token = request.POST.get(
